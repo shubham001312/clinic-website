@@ -263,16 +263,16 @@
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
   }
 
-  /* WhatsApp Float - desktop only */
+  /* WhatsApp Float */
   .whatsapp-float {
     position: fixed;
-    bottom: 30px;
-    right: 30px;
-    width: 60px;
-    height: 60px;
+    bottom: 80px;
+    right: 20px;
+    width: 52px;
+    height: 52px;
     background-color: #25D366;
     color: white;
-    display: none;
+    display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
@@ -284,7 +284,10 @@
 
   @media (min-width: 1024px) {
     .whatsapp-float {
-      display: flex;
+      bottom: 30px;
+      right: 30px;
+      width: 60px;
+      height: 60px;
     }
   }
 
