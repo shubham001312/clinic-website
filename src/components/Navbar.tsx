@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState, useCallback } from "react";
 import { Home, User, Stethoscope, Phone, CalendarDays } from "lucide-react";
 
 const navLinks = [
@@ -13,6 +14,20 @@ const navLinks = [
 
 export default function Navbar() {
   const pathname = usePathname();
+  const [tapped, setTapped] = useState<string | null>(null);
+  const [ripple, setRipple] = useState<{ key: string; x: number; y: number } | null>(null);
+
+  const handleTap = useCallback((href: string, e: React.PointerEvent) => {
+    setTapped(href);
+    const rect = e.currentTarget.getBoundingClientRect();
+    setRipple({
+      key: `${href}-${Date.now()}`,
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    });
+    setTimeout(() => setTapped(null), 400);
+    setTimeout(() => setRipple(null), 600);
+  }, []);
 
   return (
     <>
@@ -91,63 +106,96 @@ export default function Navbar() {
           {navLinks.map((link) => {
             const Icon = link.icon;
             const isActive = pathname === link.href;
+            const isTapped = tapped === link.href;
             return (
-              <li key={link.href}>
+              <li key={link.href} className="relative">
                 <Link
                   href={link.href}
-                  className={`flex flex-col items-center justify-center gap-0.5 w-14 py-1 rounded-xl transition-all ${
-                    isActive
-                      ? "text-primary scale-105"
-                      : "text-gray hover:text-dark"
-                  }`}
+                  onPointerDown={(e) => handleTap(link.href, e)}
+                  className={`flex flex-col items-center justify-center gap-0.5 w-14 py-1 rounded-xl relative overflow-hidden
+                    ${isActive ? "text-primary" : "text-gray"}
+                    ${isTapped ? "animate-nav-bounce" : ""}`}
                 >
+                  {/* Ripple */}
+                  {ripple?.key.startsWith(link.href) && (
+                    <span
+                      className="absolute w-12 h-12 rounded-full bg-primary/15 animate-ripple pointer-events-none"
+                      style={{ left: ripple.x - 24, top: ripple.y - 24 }}
+                    />
+                  )}
                   <div
-                    className={`p-1 rounded-xl transition-all ${
+                    className={`p-1 rounded-xl transition-all duration-200 ${
                       isActive
                         ? "bg-primary/10"
                         : ""
-                    }`}
+                    } ${isTapped ? "scale-90 bg-primary/15" : ""}`}
                   >
                     <Icon
                       size={22}
                       strokeWidth={isActive ? 2.5 : 1.8}
+                      className={`transition-transform duration-150 ${isTapped ? "scale-110" : ""}`}
                     />
                   </div>
-                  <span className="text-[10px] font-medium leading-none">
+                  <span className={`text-[10px] font-medium leading-none transition-all duration-150 ${
+                    isTapped ? "translate-y-[-1px]" : ""
+                  }`}> 
                     {link.label}
                   </span>
-                  {isActive && (
+                  {isActive && !isTapped && (
                     <span className="absolute -top-px left-1/2 -translate-x-1/2 w-8 h-[3px] bg-primary rounded-b-full" />
+                  )}
+                  {isTapped && (
+                    <span className="absolute -top-px left-1/2 -translate-x-1/2 w-10 h-[3px] bg-accent rounded-b-full animate-slide-in" />
                   )}
                 </Link>
               </li>
             );
           })}
-          <li>
-            <Link
-              href="/appointment"
-              className={`flex flex-col items-center justify-center gap-0.5 w-14 py-1 rounded-xl transition-all ${
-                pathname === "/appointment"
-                  ? "text-primary scale-105"
-                  : "text-gray hover:text-dark"
-              }`}
-            >
-              <div
-                className={`p-1.5 rounded-2xl transition-all ${
-                  pathname === "/appointment"
-                    ? "bg-primary text-white shadow-md"
-                    : "bg-primary/10 text-primary"
-                }`}
-              >
-                <CalendarDays size={20} strokeWidth={pathname === "/appointment" ? 2.5 : 1.8} />
-              </div>
-              <span className="text-[10px] font-medium leading-none">
-                Book
-              </span>
-              {pathname === "/appointment" && (
-                <span className="absolute -top-px left-1/2 -translate-x-1/2 w-8 h-[3px] bg-primary rounded-b-full" />
-              )}
-            </Link>
+          <li className="relative">
+            {(() => {
+              const bookTapped = tapped === "/appointment";
+              return (
+                <Link
+                  href="/appointment"
+                  onPointerDown={(e) => handleTap("/appointment", e)}
+                  className={`flex flex-col items-center justify-center gap-0.5 w-14 py-1 rounded-xl relative overflow-hidden
+                    ${pathname === "/appointment" ? "text-primary" : "text-gray"}
+                    ${bookTapped ? "animate-nav-bounce" : ""}`}
+                >
+                  {/* Ripple */}
+                  {ripple?.key.startsWith("/appointment") && (
+                    <span
+                      className="absolute w-12 h-12 rounded-full bg-primary/15 animate-ripple pointer-events-none"
+                      style={{ left: ripple.x - 24, top: ripple.y - 24 }}
+                    />
+                  )}
+                  <div
+                    className={`p-1.5 rounded-2xl transition-all duration-200 ${
+                      pathname === "/appointment"
+                        ? "bg-primary text-white shadow-md"
+                        : "bg-primary/10 text-primary"
+                    } ${bookTapped ? "scale-90 shadow-lg" : ""}`}
+                  >
+                    <CalendarDays
+                      size={20}
+                      strokeWidth={pathname === "/appointment" ? 2.5 : 1.8}
+                      className={`transition-transform duration-150 ${bookTapped ? "scale-110" : ""}`}
+                    />
+                  </div>
+                  <span className={`text-[10px] font-medium leading-none transition-all duration-150 ${
+                    bookTapped ? "translate-y-[-1px]" : ""
+                  }`}>
+                    Book
+                  </span>
+                  {pathname === "/appointment" && !bookTapped && (
+                    <span className="absolute -top-px left-1/2 -translate-x-1/2 w-8 h-[3px] bg-primary rounded-b-full" />
+                  )}
+                  {bookTapped && (
+                    <span className="absolute -top-px left-1/2 -translate-x-1/2 w-10 h-[3px] bg-accent rounded-b-full animate-slide-in" />
+                  )}
+                </Link>
+              );
+            })()}
           </li>
         </ul>
       </nav>

@@ -369,6 +369,19 @@
   .animate-scale-in {
     animation: scaleIn 0.5s ease forwards;
   }
+
+  /* ═══════ Bottom nav haptic animations ═══════ */
+  .animate-nav-bounce {
+    animation: navBounce 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+
+  .animate-ripple {
+    animation: rippleExpand 0.6s ease-out forwards;
+  }
+
+  .animate-slide-in {
+    animation: slideIn 0.25s ease-out forwards;
+  }
 }
 
 @keyframes float {
@@ -416,6 +429,25 @@
 @keyframes countUp {
   from { opacity: 0; transform: scale(0.5); }
   to { opacity: 1; transform: scale(1); }
+}
+
+/* ═══════ Bottom nav haptic keyframes ═══════ */
+@keyframes navBounce {
+  0% { transform: scale(1); }
+  20% { transform: scale(0.88); }
+  50% { transform: scale(1.06); }
+  70% { transform: scale(0.97); }
+  100% { transform: scale(1); }
+}
+
+@keyframes rippleExpand {
+  0% { transform: scale(0); opacity: 0.6; }
+  100% { transform: scale(3); opacity: 0; }
+}
+
+@keyframes slideIn {
+  0% { width: 0; opacity: 0; }
+  100% { width: 2.5rem; opacity: 1; }
 }
 
 /* ═══════════════ MOBILE BOTTOM NAV SUPPORT ═══════════════ */
