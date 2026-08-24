@@ -107,7 +107,7 @@ export default function Footer() {
               )
             )}
           </div>
-          <form onSubmit={handleSubscribe} className="flex gap-2">
+          <form onSubmit={handleSubscribe} className="hidden sm:flex gap-2">
             <input
               type="email"
               placeholder="Enter your email"
