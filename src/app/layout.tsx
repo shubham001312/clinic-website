@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
@@ -31,6 +31,12 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -48,10 +54,13 @@ export default function RootLayout({
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
         />
+        <meta name="theme-color" content="#0a7c8c" />
       </head>
       <body className={`${poppins.variable} font-poppins`}>
         <Navbar />
-        <main>{children}</main>
+        <main className="lg:pb-0 pb-0" style={{ paddingBottom: 0 }}>
+          {children}
+        </main>
         <Footer />
         <WhatsAppButton />
         <ScrollToTop />

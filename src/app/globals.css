@@ -263,7 +263,7 @@
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
   }
 
-  /* WhatsApp Float */
+  /* WhatsApp Float - desktop only */
   .whatsapp-float {
     position: fixed;
     bottom: 30px;
@@ -272,7 +272,7 @@
     height: 60px;
     background-color: #25D366;
     color: white;
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
@@ -282,6 +282,12 @@
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
+  @media (min-width: 1024px) {
+    .whatsapp-float {
+      display: flex;
+    }
+  }
+
   .whatsapp-float:hover {
     background-color: #1ebe5d;
     transform: scale(1.1);
@@ -289,7 +295,7 @@
     box-shadow: 0 6px 25px rgba(37, 211, 102, 0.5);
   }
 
-  /* Scroll to Top Button */
+  /* Scroll to Top Button - desktop only */
   .scroll-top-btn {
     position: fixed;
     bottom: 30px;
@@ -300,13 +306,19 @@
     color: white;
     border: none;
     border-radius: 50%;
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     z-index: 999;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 4px 15px rgba(10, 124, 140, 0.3);
+  }
+
+  @media (min-width: 1024px) {
+    .scroll-top-btn {
+      display: flex;
+    }
   }
 
   .scroll-top-btn:hover {
@@ -406,6 +418,14 @@
   to { opacity: 1; transform: scale(1); }
 }
 
+/* ═══════════════ MOBILE BOTTOM NAV SUPPORT ═══════════════ */
+@media (max-width: 1023px) {
+  /* Push content above the fixed bottom nav bar (64px) + safe area */
+  body {
+    padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .section-title {
@@ -421,3 +441,4 @@
     font-size: 1rem;
   }
 }
+
