@@ -215,10 +215,10 @@ export default function ContactPage() {
 
               <div className="info-item">
                 <Mail size={24} className="text-primary mt-1 flex-shrink-0" />
-                <div>
+                <div className="min-w-0">
                   <h3>Email Address</h3>
-                  <p>info@drkrishnanjanchakraborty.in</p>
-                  <p>
+                  <p className="break-all">info@drkrishnanjanchakraborty.in</p>
+                  <p className="break-all">
                     For appointments: appointments@drkrishnanjanchakraborty.in
                   </p>
                 </div>

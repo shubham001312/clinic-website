@@ -129,12 +129,12 @@ export default function AppointmentPage() {
   return (
     <>
       {/* Appointment Header */}
-      <section className="bg-gradient-to-br from-[#f5f7fa] to-[#e4edf5] py-16 text-center">
+      <section className="bg-gradient-to-br from-[#f5f7fa] to-[#e4edf5] py-10 md:py-16 text-center">
         <div className="w-[90%] max-w-[1200px] mx-auto">
-          <h1 className="text-4xl md:text-5xl font-bold text-dark mb-4">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-dark mb-3 md:mb-4">
             Schedule Your Consultation
           </h1>
-          <p className="text-lg text-gray max-w-[800px] mx-auto">
+          <p className="text-base md:text-lg text-gray max-w-[800px] mx-auto">
             Book your appointment with Dr. Krishnanjan Chakraborty in just a few
             simple steps
           </p>
@@ -143,9 +143,9 @@ export default function AppointmentPage() {
 
       {/* Appointment Form */}
       <AnimatedSection>
-      <section className="py-20 bg-light">
+      <section className="py-10 md:py-20 bg-light">
         <div className="w-[90%] max-w-[1200px] mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 md:gap-12">
             {/* Form */}
             <div className="lg:col-span-2">
               <div className="text-center mb-8">
@@ -174,7 +174,7 @@ export default function AppointmentPage() {
               ) : (
                 <form
                   onSubmit={handleSubmit}
-                  className="bg-white p-8 rounded-xl shadow-sm space-y-6"
+                  className="bg-white p-5 sm:p-8 rounded-xl shadow-sm space-y-4 md:space-y-6"
                 >
                   <div className="form-row">
                     <div className="form-group">
@@ -362,7 +362,7 @@ export default function AppointmentPage() {
                   <div className="text-center">
                     <button
                       type="submit"
-                      className="btn btn-primary btn-lg"
+                      className="btn btn-primary w-full sm:w-auto sm:btn-lg"
                       disabled={loading}
                     >
                       {loading ? "Scheduling..." : "Schedule Appointment"}
@@ -374,7 +374,7 @@ export default function AppointmentPage() {
             </div>
 
             {/* Sidebar Info */}
-            <div className="bg-white p-8 rounded-xl shadow-sm h-fit">
+            <div className="bg-white p-5 sm:p-8 rounded-xl shadow-sm h-fit">
               <h2 className="text-2xl font-semibold mb-6 text-dark">
                 Clinic Information
               </h2>
@@ -403,11 +403,12 @@ export default function AppointmentPage() {
 
               <div className="info-item">
                 <Phone size={24} className="text-primary mt-1 flex-shrink-0" />
-                <div>
+                <div className="min-w-0">
                   <h3>Contact Us</h3>
                   <p>
                     Phone: 098307 03777
-                    <br />
+                  </p>
+                  <p className="break-all">
                     Email: info@drkrishnanjanchakraborty.in
                   </p>
                 </div>
@@ -442,6 +443,25 @@ export default function AppointmentPage() {
                     Video consultations available for follow-ups and minor
                     concerns
                   </p>
+                </div>
+              </div>
+
+              {/* Map */}
+              <div className="mt-6">
+                <h3 className="text-xl font-semibold mb-4 text-dark">
+                  Find Us on Map
+                </h3>
+                <div className="rounded-xl overflow-hidden shadow-md relative w-full">
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3684.4021829070413!2d88.37022643196889!3d22.717758710860584!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f89bf1ca4d32ff%3A0xcca2f77f99798d0d!2s507%2C%20Kalyan%20Nagar%2C%20Rahara%2C%20Barrackpore%2C%20Khardaha%2C%20West%20Bengal%20700112!5e0!3m2!1sen!2sin!4v1692876543210"
+                    width="100%"
+                    height="200"
+                    className="md:h-[250px]"
+                    style={{ border: 0 }}
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                  />
                 </div>
               </div>
             </div>
